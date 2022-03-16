@@ -1,10 +1,14 @@
 
 import nltk
 import uvicorn
+import logging
 
 from config import config
 
 import modules.web_modules.add_file
+import modules.web_modules.word_service
+
+logging.basicConfig(level=logging.INFO)
 
 
 def check_install():
