@@ -20,3 +20,12 @@ async def get_autocomplete(start_string: str):
     print(suitable)
     return sorted(suitable, key=lambda x_y: x_y[1], reverse=True)[:7]
 
+
+@app.get("/api/spellcheck")
+async def spellcheck(q: str):
+    tokens = q.split()
+    suitable = []
+    for words in zip(tokens, tokens[1:], tokens[2:]):
+        suitable = list(filter(lambda x_y: x_y[0][0] == words[0] and x_y[0][2] == words[2], Resources.d_3_stats.items()))
+        return sorted(suitable, key=lambda words_y: words_y[1], reverse=True)[:7]
+
