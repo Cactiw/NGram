@@ -2,6 +2,8 @@ import itertools
 import logging
 from typing import List, Tuple
 
+import tqdm
+
 from modules.dict_service import inc_dict_counter
 
 
@@ -15,11 +17,15 @@ def count_ngrams(tokens: List[str]) -> Tuple[dict]:
 
 
 def smooth(d1: dict, d2: dict, d3: dict):
-    for word_1, word_2 in itertools.combinations(d1, 2):
-        d2.update({(word_1, word_2): d2.get((word_1, word_2), 0) + 1})
+    keys = list(d1.keys())
+    for i, word_1 in tqdm.tqdm(enumerate(d1), total=len(keys)):
+        for word_2 in keys[i:]:
+            d2.update({(word_1, word_2): d2.get((word_1, word_2), 0) + 1})
     logging.info("Started smooth trigrams")
-    for word_1, word_2, word_3 in itertools.combinations(d1, 3):
-        d3.update({(word_1, word_2, word_3): d2.get((word_1, word_2, word_3), 0) + 1})
+    for i, word_1 in tqdm.tqdm(enumerate(d1), total=len(keys)):
+        for j, word_2 in enumerate(keys[i:], start=i):
+            for word_3 in keys[j:]:
+                d3.update({(word_1, word_2, word_3): d2.get((word_1, word_2, word_3), 0) + 1})
 
 
 def count_perplection(prob: float, n: int):
