@@ -15,3 +15,13 @@ class Resources:
             for key, value in d.items():
                 getattr(cls, f'd_{i}_stats').update({key: value / total})
 
+    @classmethod
+    def clear_resources(cls):
+        cls.d_1.clear()
+        cls.d_2.clear()
+        cls.d_3.clear()
+
+        cls.d_1_stats.clear()
+        cls.d_2_stats.clear()
+        cls.d_3_stats.clear()
+

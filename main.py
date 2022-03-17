@@ -18,7 +18,7 @@ def check_install():
 def start_app():
     uvicorn.run(
         "modules.core.app:app",
-        host="localhost",
+        host="0.0.0.0",
         port=config.APP_PORT,
         log_level="info"
     )

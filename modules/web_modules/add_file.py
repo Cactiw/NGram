@@ -24,6 +24,11 @@ async def add_file(file: UploadFile = File(...)):
     logging.info('File added.')
 
 
+@app.post("/api/clearModel")
+async def clear_model():
+    Resources.clear_resources()
+
+
 @app.get("/api/countWords")
 async def count_words() -> int:
     return sum(Resources.d_1.values())

@@ -12,3 +12,5 @@ def count_ngrams(tokens: List[str]) -> Tuple[dict]:
     return res, res_2, res_3
 
 
+def count_perplection(prob: float, n: int):
+    return (1 / prob) ** (1 / n)

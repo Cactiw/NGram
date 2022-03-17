@@ -2,6 +2,7 @@ import logging
 import traceback
 
 from modules.core.app import app
+from modules.ngram import count_perplection
 from modules.resources import Resources
 
 
@@ -21,7 +22,10 @@ async def get_autocomplete(start_string: str):
         suitable.extend(list(map(lambda word_y: ((word_y[0],), word_y[1]),
                                  filter(lambda x_y: x_y[0].startswith(words[0]), Resources.d_1_stats.items()))))
     print(suitable)
-    return sorted(suitable, key=lambda x_y: x_y[1], reverse=True)[:7]
+    return list(map(
+        lambda x_y: (x_y[0], count_perplection(x_y[1], len(words))),
+        sorted(suitable, key=lambda x_y: x_y[1], reverse=True)[:7]
+    ))
 
 
 @app.get("/api/spellcheck")
